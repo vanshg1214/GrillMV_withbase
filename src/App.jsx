@@ -49,13 +49,13 @@ function RectangularDimension({ box }) {
       <Line points={[[xLeft, cy, zFront - 0.05], [xLeft, cy, zFront + 0.05]]} color="#841619" lineWidth={2} />
       <Line points={[[xRight, cy, zFront - 0.05], [xRight, cy, zFront + 0.05]]} color="#841619" lineWidth={2} />
       <Html position={[cx, cy, zFront + 0.08]} center className="dimension-label">
-        {(width * 39.37).toFixed(1)}"
+        51"
       </Html>
       <Line points={[[xSide, cy, zBack], [xSide, cy, zFrontEdge]]} color="#841619" lineWidth={2} />
       <Line points={[[xSide - 0.05, cy, zBack], [xSide + 0.05, cy, zBack]]} color="#841619" lineWidth={2} />
       <Line points={[[xSide - 0.05, cy, zFrontEdge], [xSide + 0.05, cy, zFrontEdge]]} color="#841619" lineWidth={2} />
       <Html position={[xSide + 0.08, cy, cz]} center className="dimension-label">
-        {(depth * 39.37).toFixed(1)}"
+        24"
       </Html>
     </group>
   )
@@ -101,6 +101,7 @@ function Model({ url, onCentered, ...props }) {
 export default function App() {
   const modelUrl = '/American 24 inch outdoor grill.glb'
   const arViewerRef = useRef(null)
+  const [orbitTarget, setOrbitTarget] = useState([0, 0.8, 0])
   const [showQR, setShowQR] = useState(false)
   const [currentUrl, setCurrentUrl] = useState('')
 
@@ -158,11 +159,11 @@ export default function App() {
               <ambientLight intensity={0.5} />
               <directionalLight position={[5, 10, 5]} intensity={1} castShadow />
               <Suspense fallback={<Loader />}>
-                <Model url={modelUrl} hideDimensions={showQR} />
+                <Model url={modelUrl} hideDimensions={showQR} onCentered={({ size }) => setOrbitTarget([0, size.y * 0.5, 0])} />
                 <ContactShadows position={[0, 0, 0]} opacity={0.4} scale={15} blur={1.5} far={4} color="#000" />
                 <Environment files="/cedar_bridge_sunset_1_4k.hdr" environmentIntensity={1.2} />
               </Suspense>
-              <OrbitControls makeDefault minDistance={1} maxDistance={10} />
+              <OrbitControls makeDefault target={orbitTarget} minDistance={1} maxDistance={10} />
             </Canvas>
 
             <button className="ar-trigger" onClick={handleARClick}>
@@ -262,7 +263,7 @@ export default function App() {
       )}
 
       {/* Hidden AR engine */}
-      <model-viewer ref={arViewerRef} src={modelUrl} ar ar-scale="fixed" ar-placement="floor" ar-modes="scene-viewer webxr quick-look" shadow-intensity="1" style={{ display: 'none' }} />
+      <model-viewer ref={arViewerRef} src={modelUrl} ar ar-scale="fixed" ar-placement="floor" ar-modes="scene-viewer webxr quick-look" shadow-intensity="1" scale="1.15 1.15 1.15" style={{ display: 'none' }} />
     </div>
   )
 }
