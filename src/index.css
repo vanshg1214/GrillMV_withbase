@@ -27,11 +27,21 @@ body {
   background: var(--maroon);
   color: var(--white);
   padding: 8px 20px;
-  text-align: center;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   font-size: 0.8rem;
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 1px;
+}
+.top-bar-text {
+  text-align: left;
+}
+.top-bar-login {
+  cursor: pointer;
+  white-space: nowrap;
+  margin-left: 10px;
 }
 
 .middle-bar {
@@ -92,6 +102,9 @@ body {
   background: #f5f5f5;
   font-size: 0.85rem;
   color: var(--text-secondary);
+  white-space: nowrap;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
 }
 
 /* ─── PRODUCT LAYOUT ────────────────────────────── */
@@ -341,19 +354,21 @@ body {
     order: -1;
   }
   
-  .main-logo { height: 70px; }
+  .main-logo { height: auto; max-height: 70px; max-width: 100%; object-fit: contain; }
   
   .search-container, .header-icons {
     width: 100%;
     justify-content: center;
     max-width: none;
   }
+  .header-icons { flex-wrap: wrap; gap: 15px; }
 
   .nav-bar { display: none; }
   
-  .breadcrumbs-container { padding: 10px 20px; }
+  .breadcrumbs-container { padding: 10px 20px; font-size: 0.75rem; }
   
   .box-structure { height: 400px; }
+  .thumbnail-row { justify-content: center; flex-wrap: wrap; }
   
   .tabs-container { padding: 0 20px; margin: 20px auto; }
   
@@ -366,17 +381,33 @@ body {
 }
 
 @media (max-width: 600px) {
-  .top-bar { font-size: 0.7rem; padding: 5px 10px; }
+  .top-bar { 
+    font-size: 0.65rem; 
+    padding: 8px 10px; 
+    flex-direction: column;
+    gap: 5px;
+    text-align: center;
+  }
+  .top-bar-text { text-align: center; }
+  .top-bar-login { margin-left: 0; }
   
   .box-structure { height: 320px; }
   
+  .ar-trigger {
+    padding: 8px 16px;
+    font-size: 0.85rem;
+    bottom: 10px;
+    right: 10px;
+  }
+
   .product-info-right h1 { font-size: 1.4rem; }
   
   .price-value { font-size: 1.5rem; }
   
   .cart-controls {
     flex-direction: column;
-    align-items: stretch;
+    align-items: center;
+    gap: 15px;
   }
   
   .add-to-cart-btn {
@@ -384,7 +415,12 @@ body {
     justify-content: center;
   }
   
-  .qty-input { justify-content: center; }
+  .qty-input { 
+    justify-content: center; 
+    width: 100%; 
+    max-width: 200px; 
+  }
+  .qty-input input { width: 100%; }
 
   .thumb {
     width: 60px;

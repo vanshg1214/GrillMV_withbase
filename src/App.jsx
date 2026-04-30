@@ -120,7 +120,8 @@ export default function App() {
     <div className="page-wrapper">
       {/* Client-like Header */}
       <div className="top-bar">
-        MAKE ENTERTAINING A LIFESTYLE! CALL 626-628-7405 FOR A FREE QUOTE <span style={{float: 'right', cursor: 'pointer'}}>Login</span>
+        <span className="top-bar-text">MAKE ENTERTAINING A LIFESTYLE! CALL 626-628-7405 FOR A FREE QUOTE</span>
+        <span className="top-bar-login">Login</span>
       </div>
       
       <header className="middle-bar">
