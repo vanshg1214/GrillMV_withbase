@@ -16,7 +16,7 @@ import * as THREE from 'three'
 function Loader() {
   const { progress } = useProgress()
   return (
-    <Html center>
+    <Html center position={[0, 0.8, 0]}>
       <div className="loader-container">
         <div className="loader"></div>
         <div style={{color: '#841619', fontSize: '0.8rem', fontWeight: 700, marginTop: '10px'}}>
