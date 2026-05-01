@@ -99,7 +99,7 @@ function Model({ url, onCentered, ...props }) {
 // --- MAIN APP COMPONENT ---
 
 export default function App() {
-  const modelUrl = '/American 24 inch outdoor grill.glb'
+  const modelUrl = '/scene (28).glb'
   const arViewerRef = useRef(null)
   const [orbitTarget, setOrbitTarget] = useState([0, 0.8, 0])
   const [showQR, setShowQR] = useState(false)
@@ -269,4 +269,4 @@ export default function App() {
   )
 }
 
-useGLTF.preload('/American 24 inch outdoor grill.glb')
+useGLTF.preload('/scene (28).glb')
