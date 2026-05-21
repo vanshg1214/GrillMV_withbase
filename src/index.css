@@ -271,19 +271,29 @@ body {
 .ar-trigger {
   position: absolute;
   bottom: 20px;
-  right: 20px;
-  background: var(--maroon);
+  left: 20px;
+  right: auto;
+  background: rgba(0, 0, 0, 0.65);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
   color: white;
-  border: none;
-  padding: 10px 20px;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  padding: 8px 16px;
   border-radius: 30px;
   font-weight: 700;
+  font-size: 0.85rem;
   cursor: pointer;
-  box-shadow: 0 4px 15px rgba(132, 22, 25, 0.3);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
   display: flex;
   align-items: center;
   gap: 8px;
   z-index: 10;
+  transition: background-color 0.2s, transform 0.2s;
+}
+
+.ar-trigger:hover {
+  background: rgba(0, 0, 0, 0.8);
+  transform: translateY(-1px);
 }
 
 .dimension-label {
@@ -426,5 +436,49 @@ body {
     width: 60px;
     height: 60px;
   }
+}
+
+/* ─── INTERACTION GESTURE OVERLAY ───────────────────── */
+.interaction-prompt-overlay {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  pointer-events: none; /* Let canvas clicks pass through */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 50;
+}
+
+.gesture-circle {
+  background: rgba(0, 0, 0, 0.65);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 50%;
+  width: 70px;
+  height: 70px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.35);
+  animation: gesture-scale 2.5s infinite ease-in-out;
+}
+
+.gesture-icon {
+  color: #ffffff;
+  animation: gesture-swipe 2.5s infinite ease-in-out;
+}
+
+@keyframes gesture-scale {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.08); }
+}
+
+@keyframes gesture-swipe {
+  0%, 100% { transform: translate(0, 0) rotate(0deg); }
+  25% { transform: translate(-10px, -2px) rotate(-15deg); }
+  75% { transform: translate(10px, 2px) rotate(15deg); }
 }
 

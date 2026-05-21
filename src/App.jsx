@@ -104,6 +104,7 @@ export default function App() {
   const [orbitTarget, setOrbitTarget] = useState([0, 0.8, 0])
   const [showQR, setShowQR] = useState(false)
   const [currentUrl, setCurrentUrl] = useState('')
+  const [hasInteracted, setHasInteracted] = useState(false)
 
   useEffect(() => {
     setCurrentUrl(window.location.href)
@@ -154,7 +155,7 @@ export default function App() {
       <main className="product-main">
         {/* Left Column: 3D Viewer in a Box Structure */}
         <section className="viewer-section">
-          <div className="box-structure">
+          <div className="box-structure" onPointerDown={() => setHasInteracted(true)}>
             <Canvas shadows camera={{ position: [0, 1.5, 3], fov: 40 }} gl={{ toneMapping: THREE.ACESFilmicToneMapping, toneMappingExposure: 1.1 }}>
               <color attach="background" args={['#ffffff']} />
               <ambientLight intensity={0.5} />
@@ -167,16 +168,32 @@ export default function App() {
               <OrbitControls makeDefault target={orbitTarget} minDistance={1} maxDistance={10} />
             </Canvas>
 
+            {/* Google Search style 3D rotate prompt overlay */}
+            {!hasInteracted && (
+              <div className="interaction-prompt-overlay">
+                <div className="gesture-circle">
+                  <svg width="40" height="40" fill="currentColor" viewBox="0 0 24 24" className="gesture-icon">
+                    <path d="M12 2c-.55 0-1 .45-1 1v7.67L8.85 9.49c-.39-.39-1.02-.39-1.41 0-.39.39-.39 1.02 0 1.41l3.52 3.52c.38.38.89.6 1.42.6H19c1.1 0 2-.9 2-2V8c0-.55-.45-1-1-1s-1 .45-1 1v2h-1V5c0-.55-.45-1-1-1s-1 .45-1 1v5h-1V4c0-.55-.45-1-1-1s-1 .45-1 1v6h-1V2c0-.55-.45-1-1-1zM4 14c0-2.21 1.79-4 4-4 .55 0 1-.45 1-1s-.45-1-1-1c-3.31 0-6 2.69-6 6s2.69 6 6 6c.55 0 1-.45 1-1s-.45-1-1-1c-2.21 0-4-1.79-4-4z"/>
+                  </svg>
+                </div>
+              </div>
+            )}
+
             <button className="ar-trigger" onClick={handleARClick}>
-              <svg width="20" height="20" fill="currentColor" viewBox="0 0 16 16">
+              <svg width="18" height="18" fill="currentColor" viewBox="0 0 16 16" style={{ marginRight: '6px' }}>
                 <path d="M0 1.5A1.5 1.5 0 0 1 1.5 0h2A1.5 1.5 0 0 1 5 1.5v1A1.5 1.5 0 0 1 3.5 4h-2A1.5 1.5 0 0 1 0 2.5v-1zm11 0A1.5 1.5 0 0 1 12.5 0h2A1.5 1.5 0 0 1 16 1.5v1A1.5 1.5 0 0 1 14.5 4h-2A1.5 1.5 0 0 1 11 2.5v-1zm-11 11A1.5 1.5 0 0 1 1.5 11h2A1.5 1.5 0 0 1 5 12.5v1A1.5 1.5 0 0 1 3.5 16h-2A1.5 1.5 0 0 1 0 14.5v-1zm11 0A1.5 1.5 0 0 1 12.5 11h2a1.5 1.5 0 0 1 1.5 1.5v1a1.5 1.5 0 0 1-1.5 1.5h-2a1.5 1.5 0 0 1-1.5-1.5v-1z"/>
               </svg>
-              View in AR
+              View in 3D
             </button>
           </div>
 
           <div className="thumbnail-row">
-            <div className="thumb active" style={{borderColor: '#841619'}}>3D</div>
+            <div className="thumb active" style={{borderColor: '#841619', display: 'flex', gap: '6px', alignItems: 'center'}}>
+              <svg width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                <path d="M0 1.5A1.5 1.5 0 0 1 1.5 0h2A1.5 1.5 0 0 1 5 1.5v1A1.5 1.5 0 0 1 3.5 4h-2A1.5 1.5 0 0 1 0 2.5v-1zm11 0A1.5 1.5 0 0 1 12.5 0h2A1.5 1.5 0 0 1 16 1.5v1A1.5 1.5 0 0 1 14.5 4h-2A1.5 1.5 0 0 1 11 2.5v-1zm-11 11A1.5 1.5 0 0 1 1.5 11h2A1.5 1.5 0 0 1 5 12.5v1A1.5 1.5 0 0 1 3.5 16h-2A1.5 1.5 0 0 1 0 14.5v-1zm11 0A1.5 1.5 0 0 1 12.5 11h2a1.5 1.5 0 0 1 1.5 1.5v1a1.5 1.5 0 0 1-1.5 1.5h-2a1.5 1.5 0 0 1-1.5-1.5v-1z"/>
+              </svg>
+              3D
+            </div>
             {[1, 2, 3].map(i => (
               <div key={i} className="thumb">
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#ccc"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 13l4-4 5 5 5-5 4 4"/></svg>
